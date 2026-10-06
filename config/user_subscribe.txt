@@ -1,33 +1,39 @@
-# polo 自用 IPTV 订阅源
+# polo 自用 IPTV 订阅源（第 2 版 · 2026-10-06 优化）
 # ------------------------------------------------------------------
-# 为什么文件名是 user_subscribe.txt：
-#   iptv-api 有个通用覆盖机制（utils/tools.py 的 resource_path）——
-#   对任何配置路径，只要同目录存在 `user_<原文件名>`，就用它替代原文件。
-#   所以 user_subscribe.txt 会覆盖 subscribe.txt，而 `Sync fork` 不会碰它。
-#   官方 CHANGELOG 也是这么建议的：「工作流用户为了避免冲突覆盖，建议文件重命名添加 user_ 前缀」。
+# 为什么文件名带 user_ 前缀：
+#   iptv-api 源码 utils/tools.py 有通用覆盖机制——同目录存在 `user_<原文件名>`
+#   就用它替代原文件。官方 CHANGELOG 也建议工作流用户这么做，避免 sync 上游时被覆盖。
 #
-# 以下 5 条均于 2026-10-06 实测有效（体积与条目数已核实），
-# 已剔除 3 条无效源：live.hacks.tools 的 ipv4（与 vbskycn 内容完全相同，纯镜像）、
-# vbskycn 与 live.hacks.tools 的 ipv6（各 268 B 空壳，只有广告占位）。
+# 本版相对第 1 版的改动与依据（全部为 2026-10-06 实测）：
+#   ＋ 新增 hujingguang/ChinaIPTV：唯一提供了 CCTV-4K 候选的源（此前 CCTV-4K 有效 0）
+#   － 移除 iptv-org/iptv 两个分支：英文/拼音命名，与中文频道白名单命中率极低
+#   － 移除 live.hacks.tools ipv4：与 vbskycn 内容体积完全相同，纯镜像
+#   － 移除 vbskycn / hacks 的 ipv6：两条都是 268 B 空壳，只有一条广告占位
+#   － 移除 Guovin/iptv-database：404，该仓 2026-01-04 后无提交
+#
+# 方括号里是「独家接口数」＝该源提供了别的源给不了的接口（用同一套白名单增量计算）。
 # ------------------------------------------------------------------
 
-# 手工维护，覆盖面最广（卫视+港澳台+电影+咪咕点播），230 KB / 1211 条
+# 【独家 308 条 / 覆盖 83 个频道】手工维护，覆盖面最广：卫视 + 港澳台 + 电影 + 咪咕点播。
+# 目前唯一稳定提供「港澳台」与「电影频道」的源。
 https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u
 
-# 服务器自动扫描验证，约每 6 小时更新，53 KB / 711 条
+# 【独家 101 条 / 覆盖 51 个频道】服务器自动扫描验证，标称每 6 小时更新
 https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.txt
 
-# 条目最多的一源，1.36 MB / 15234 条，但含推广行与混杂历史数据
+# 【独家 1663 条 / 覆盖 98 个频道】候选池最大的一源（1.36 MB / 15,234 条）
+# 注意：含推广行（以 ◆ 开头）与混杂历史数据，噪声最多；但它覆盖的频道数（98）
+# 比 suxuang（83）还多，是「量」的主要来源。iptv-api 的测速会自动筛掉它的死链，
+# 所以留着净收益为正。若哪天想让列表更干净，这是第一个可以砍的源。
 https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/others_output.txt
 
-# 国际源的中国分区（英文/拼音命名 + 分辨率后缀），29 KB
-https://raw.githubusercontent.com/iptv-org/iptv/gh-pages/countries/cn.m3u
-
-# 同上另一分支，条目更全，56 KB
-https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u
+# 【新增】独家 22 个频道，含 CCTV-4K、凤凰中文/资讯、湖南/浙江/深圳等卫视
+# 作者称每 15 分钟从直播站抓取重写（实测仓库当天有提交）
+# ⚠️ 该仓库另有一个 xxx.m3u8 成人内容文件，与本订阅无关，切勿引用
+https://raw.githubusercontent.com/hujingguang/ChinaIPTV/main/cnTV_AutoUpdate.m3u8
 
 
 [WHITELIST]
 # 白名单内的订阅源：其接口不参与测速，始终保留在结果最前。
-# 现在留空——我们要的就是让测速把不合格接口全部踢掉。
+# 留空——我们要的就是让测速把不合格接口踢掉。
 # 如果某个源你完全信任、希望它永远优先，把地址挪到这一行下面。
