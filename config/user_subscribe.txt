@@ -1,0 +1,33 @@
+# polo 自用 IPTV 订阅源
+# ------------------------------------------------------------------
+# 为什么文件名是 user_subscribe.txt：
+#   iptv-api 有个通用覆盖机制（utils/tools.py 的 resource_path）——
+#   对任何配置路径，只要同目录存在 `user_<原文件名>`，就用它替代原文件。
+#   所以 user_subscribe.txt 会覆盖 subscribe.txt，而 `Sync fork` 不会碰它。
+#   官方 CHANGELOG 也是这么建议的：「工作流用户为了避免冲突覆盖，建议文件重命名添加 user_ 前缀」。
+#
+# 以下 5 条均于 2026-10-06 实测有效（体积与条目数已核实），
+# 已剔除 3 条无效源：live.hacks.tools 的 ipv4（与 vbskycn 内容完全相同，纯镜像）、
+# vbskycn 与 live.hacks.tools 的 ipv6（各 268 B 空壳，只有广告占位）。
+# ------------------------------------------------------------------
+
+# 手工维护，覆盖面最广（卫视+港澳台+电影+咪咕点播），230 KB / 1211 条
+https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u
+
+# 服务器自动扫描验证，约每 6 小时更新，53 KB / 711 条
+https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.txt
+
+# 条目最多的一源，1.36 MB / 15234 条，但含推广行与混杂历史数据
+https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/others_output.txt
+
+# 国际源的中国分区（英文/拼音命名 + 分辨率后缀），29 KB
+https://raw.githubusercontent.com/iptv-org/iptv/gh-pages/countries/cn.m3u
+
+# 同上另一分支，条目更全，56 KB
+https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u
+
+
+[WHITELIST]
+# 白名单内的订阅源：其接口不参与测速，始终保留在结果最前。
+# 现在留空——我们要的就是让测速把不合格接口全部踢掉。
+# 如果某个源你完全信任、希望它永远优先，把地址挪到这一行下面。
