@@ -1,0 +1,39 @@
+# polo 自用频道别名
+# ------------------------------------------------------------------
+# 为什么叫 user_alias.txt：同 user_subscribe.txt，靠 user_ 前缀覆盖 config/alias.txt。
+# 源码依据：utils/constants.py 里 alias_path = "config/alias.txt"，
+#          而 utils/tools.py 的 resource_path() 会用同目录的 user_alias.txt 替代它。
+#
+# 格式（官方规定，英文逗号分隔）：
+#   模板频道名称,别名1,别名2,别名3
+# 含义：模板里写的那个名字，在源里出现下列写法时也算同一个台。
+#
+# 为什么需要它：iptv-api 内置别名表有 7254 条，已覆盖「TVB翡翠台→翡翠台」这类常见写法
+#（实测翡翠台/明珠台/无线新闻台都能正常产出）。但港澳台源的命名特别杂，
+# 这批是实测从本次运行的「未匹配频道日志」里捞出来的真实写法，内置表没覆盖。
+# ------------------------------------------------------------------
+
+# ---- 香港 ----
+无线新闻台,TVB无线新闻,TVB-无线新闻,TVB无线新闻台,无线新闻
+翡翠台,TVB翡翠台,翡翠台1080P,TVB翡翠
+明珠台,TVB明珠台,明珠
+HOY资讯台,HOY78,HOY 78,HOY资讯,HOY Infotainment,HOY Infotainment Channel
+HOY TV,HOY77,HOY 77,HOY
+TVB Plus,TVB PLUS,TVBPlus
+凤凰卫视中文台,凤凰中文,凤凰卫视中文,Phoenix Chinese Channel
+凤凰卫视资讯台,凤凰资讯,凤凰卫视资讯,Phoenix InfoNews Channel
+凤凰卫视香港台,凤凰香港,凤凰香港台,凤凰卫视香港
+ViuTV,VIUTV,VIUTV1,VIU TV
+
+# ---- 澳门 ----
+澳视澳门,澳视,澳门澳视,TDM Ou Mun
+澳门莲花卫视,莲花卫视,澳门莲花,Lotus TV,Lotus Macau
+
+# ---- 中国台湾 ----
+台视,台視,TTV
+中视,中視,CTV
+华视,華視,CTS
+民视,民視,FTV
+TVBS新闻,TVBS,TVBS-N,TVBS新闻台,TVBS新聞
+东森新闻,EBC东森新闻,东森,EBC东森新闻台
+中天新闻,中天,中天新聞
